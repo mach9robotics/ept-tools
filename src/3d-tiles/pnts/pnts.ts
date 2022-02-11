@@ -1,13 +1,13 @@
 import { BatchTable } from '3d-tiles/batch-table'
 import { FeatureTable } from '3d-tiles/feature-table'
 import { padEnd } from '3d-tiles/utils'
-
-import { Header } from './header'
 import { Params } from '../types'
+import { Header } from './header'
+
 
 export * as Constants from './constants'
-
 export type { BatchTable, FeatureTable }
+
 export function translate(params: Params) {
   const {
     header: featureTableHeaderObject,

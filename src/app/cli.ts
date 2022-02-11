@@ -1,9 +1,7 @@
 #!/usr/bin/env node
+import { Server } from '3d-tiles'
 import { basename, join, normalize, popSlash } from 'protopath'
 import yargs from 'yargs'
-
-import { Server } from '3d-tiles'
-
 import { tile } from './tile'
 import { upgradeDir, upgradeOne } from './upgrade'
 import { validate } from './validate'
@@ -19,7 +17,7 @@ function run() {
   return yargs
     .demandCommand()
     .strict()
-    .help()
+    .help('TEST TEST TEST')
     .command(
       'validate [input]',
       'Validate EPT metadata',

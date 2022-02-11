@@ -1,7 +1,7 @@
+import { BoundingVolume } from '3d-tiles/bounding-volume'
 import { Bounds, Hierarchy, Key, Step } from 'ept'
 import { Reproject } from 'utils'
 
-import { BoundingVolume } from '3d-tiles/bounding-volume'
 
 const steps: Step[] = [
   [0, 0, 0],

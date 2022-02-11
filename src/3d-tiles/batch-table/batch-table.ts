@@ -1,8 +1,8 @@
 import { Options } from '3d-tiles/types'
 import { Dimension, Schema, View } from 'ept'
 import { EptToolsError } from 'types'
-
 import { Header } from './header'
+
 
 // Work around TS namespaced re-export deficiency.
 type _Header = Header

@@ -1,6 +1,5 @@
 import { Bounds, Ept, Hierarchy, Key, Schema, Srs } from 'ept'
 import { EptToolsError } from 'types'
-
 import { Options } from '../types'
 import * as Constants from './constants'
 import { Tile } from './tile'

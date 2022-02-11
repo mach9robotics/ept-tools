@@ -1,9 +1,9 @@
 import { Schema } from 'ajv'
 import { Point } from 'types'
 import { Reproject } from 'utils'
-
 import { Key } from './key'
 import { Step } from './step'
+
 
 export type Bounds = [...Point, ...Point] // Min, max.
 const schema: Schema = {
@@ -76,7 +76,10 @@ function stepTo(bounds: Bounds, [d, x, y, z]: Key) {
 }
 
 function reproject(bounds: Bounds, reproject: Reproject): Bounds {
-  return [...reproject(min(bounds)), ...reproject(max(bounds))]
+  const allCorners = [0, 3].flatMap(x => [1, 4].flatMap(y => [2, 5].map(z => [bounds[x], bounds[y], bounds[z]])));
+  const newBounds = allCorners.map(reproject);
+  const [lngs, lats, heights] = [0, 1, 2].map(idx => newBounds.map(row => row[idx]));
+  return [Math.min(...lngs), Math.min(...lats), Math.min(...heights), Math.max(...lngs), Math.max(...lats), Math.max(...heights)]
 }
 
 function offsetHeight(b: Bounds, zOffset: number): Bounds {

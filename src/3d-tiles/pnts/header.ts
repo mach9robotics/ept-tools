@@ -1,6 +1,6 @@
 import { EptToolsError } from 'types'
-
 import * as Constants from './constants'
+
 
 export const Header = { create }
 
@@ -50,9 +50,10 @@ function create({
   buffer.write(Constants.magic, 0, 'utf8')
   buffer.writeUInt32LE(Constants.version, 4)
   buffer.writeUInt32LE(total, 8)
-  buffer.writeUInt32LE(featureTableHeader.length, 12)
+  buffer.writeUInt32LE(featureTableHeader.length + 4, 12)
   buffer.writeUInt32LE(featureTableBinary.length, 16)
   buffer.writeUInt32LE(batchTableHeader.length, 20)
   buffer.writeUInt32LE(batchTableBinary.length, 24)
+  buffer.write('    ', 28, 'utf8')
   return buffer
 }

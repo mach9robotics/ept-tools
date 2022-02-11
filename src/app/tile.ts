@@ -1,10 +1,10 @@
+import * as Cesium from '3d-tiles'
 import { Forager } from 'forager'
 import { mkdirp } from 'fs-extra'
 import { getProtocol, getStem, join } from 'protopath'
-
-import * as Cesium from '3d-tiles'
 import { EptToolsError } from 'types'
-import { Pool, isReadable } from 'utils'
+import { isReadable, Pool } from 'utils'
+
 
 type Tile = {
   input: string
