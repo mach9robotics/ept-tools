@@ -1,4 +1,5 @@
 import { Schema } from 'ajv'
+import wktParser from 'wkt-parser'
 
 export type Srs = {
   wkt?: string
@@ -27,8 +28,16 @@ const schema: Schema = {
 export const Srs = { schema, codeString, horizontalCodeString }
 
 function horizontalCodeString(srs: Srs = {}): string | undefined {
-  const { authority, horizontal } = srs
+  const { authority, horizontal, wkt } = srs
   if (authority && horizontal) return `${authority}:${horizontal}`
+  if (wkt) {
+    const parsed = wktParser(wkt)
+    if ('AUTHORITY' in parsed) {
+      if ('EPSG' in parsed.AUTHORITY) {
+        return `EPSG:${parsed.AUTHORITY.EPSG}`
+      }
+    }
+  }
 }
 
 function codeString(srs: Srs = {}): string | undefined {

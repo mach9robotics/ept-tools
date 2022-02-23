@@ -10,3 +10,5 @@ declare module 'zstd-codec' {
     static run(cb: (zstd: Zstd) => void): void
   }
 }
+
+declare module 'wkt-parser';
