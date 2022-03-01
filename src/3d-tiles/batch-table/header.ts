@@ -28,4 +28,16 @@ export declare namespace Header {
   export type Dimension = InlineDimension | BinaryDimension
 }
 
-export type Header = { [name: string]: Header.Dimension }
+export type HeaderWithExtensions = {
+  extensions?: {
+    "3DTILES_draco_point_compression": {
+      properties: {
+        [name: string]: number
+      }
+    }
+  }
+}
+
+export type Header = HeaderWithExtensions & { 
+  [name: string]: Header.Dimension
+}

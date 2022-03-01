@@ -9,6 +9,7 @@ export type Options = {
   dimensions: string[]
   addons: Addons
   truncate: boolean
+  compress: boolean
 }
 
 export type Params = {

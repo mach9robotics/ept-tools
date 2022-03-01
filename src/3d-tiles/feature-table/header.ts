@@ -15,6 +15,15 @@ export declare namespace Header {
     BATCH_LENGTH: number
     BATCH_ID: WithByteOffset
   }
+  export type Extensions = {
+    "3DTILES_draco_point_compression": {
+      properties: {
+        [key: string]: number,
+      },
+      byteOffset: number,
+      byteLength: number
+    }
+  }
 }
 
 type Base = (Header.Floating | Header.Quantized) & {
@@ -29,6 +38,8 @@ type Base = (Header.Floating | Header.Quantized) & {
   RGB565?: WithByteOffset
   NORMAL?: WithByteOffset
   NORMAL_OCT16P?: WithByteOffset
+
+  extensions?: Header.Extensions
 }
 
 export type Header = Base | (Base & Header.WithBatchTable)
