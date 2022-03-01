@@ -175,6 +175,11 @@ function run() {
             describe: 'Truncate 16-bit colors to 8-bit',
             default: false,
             type: 'boolean',
+          })
+          .option('compress', {
+            describe: 'Use Draco compression',
+            default: false,
+            type: 'boolean'
           }),
       ({
         input,
@@ -185,13 +190,14 @@ function run() {
         dimensions,
         'z-offset': zOffset,
         truncate,
+        compress,
       }) => {
         // Get input/output as directories - they potentially point at files.
         if (basename(input) === 'ept.json') input = join(input, '..')
         if (!output) output = join(input, 'ept-tileset')
         if (basename(output) === 'tileset.json') output = join(output, '..')
 
-        const options = { dimensions, zOffset, truncate }
+        const options = { dimensions, zOffset, truncate, compress }
 
         console.log(`Tiling: ${input} -> ${output}`)
         console.log('Threads:', threads)
@@ -200,6 +206,7 @@ function run() {
         if (zOffset) console.log('Z offset:', zOffset)
         if (truncate) console.log('Truncating RGB values')
         if (force) console.log('Overwriting output')
+        if (compress) console.log('Using compression')
         return tile({ input, output, threads, force, verbose, options })
       }
     )
