@@ -1761,6 +1761,11 @@
   dependencies:
     "is-obj" "^2.0.0"
 
+"draco3d@^1.5.2":
+  "integrity" "sha512-AeRQ25Fb29c14vpjnh167UGW0nGY0ZpEM3ld+zEXoEySlmEXcXfsCHZeTgo5qXH925V1JsdjrzasdaQ22/vXog=="
+  "resolved" "https://registry.npmjs.org/draco3d/-/draco3d-1.5.2.tgz"
+  "version" "1.5.2"
+
 "dropbox@^8.2.0":
   "integrity" "sha512-dcCc6rEL/Lp72661JNc9piInG8v4/cJZLm+ijk3tqWjUA4uK5D+AtIXi9NrPsqsJNRwb1fHY/tsKgXMLJS/xmw=="
   "resolved" "https://registry.npmjs.org/dropbox/-/dropbox-8.3.0.tgz"
