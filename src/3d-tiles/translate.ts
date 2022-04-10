@@ -1,13 +1,13 @@
-import { basename, dirname, join } from 'protopath'
-
 import { Bounds, DataType, Ept, Hierarchy, Key, Srs } from 'ept'
+import { basename, dirname, join } from 'protopath'
 import { EptToolsError } from 'types'
-import { JsonSchema, Reproject, getBinary, getJson } from 'utils'
-
+import { getBinary, getJson, JsonSchema, Reproject } from 'utils'
 import { Cache } from './cache'
 import { Pnts } from './pnts'
 import { Tileset } from './tileset'
 import { Options } from './types'
+
+
 
 type Translate = {
   filename: string
@@ -68,5 +68,5 @@ export async function translate({ filename, cache, options = {} }: Translate) {
   const view = await DataType.view(dataType, buffer, schema)
   const tileBounds = Bounds.stepTo(bounds, key)
   const toEcef = Reproject.create(codeString, 'EPSG:4978')
-  return Pnts.translate({ view, tileBounds, toEcef, options })
+  return await Pnts.translate({ view, tileBounds, toEcef, options })
 }

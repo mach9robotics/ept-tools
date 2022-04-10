@@ -8,11 +8,11 @@ import { Header } from './header'
 export * as Constants from './constants'
 export type { BatchTable, FeatureTable }
 
-export function translate(params: Params) {
+export async function translate(params: Params) {
   const {
     header: featureTableHeaderObject,
     binary: featureTableBinary,
-  } = FeatureTable.create(params)
+  } = await FeatureTable.create(params)
 
   const {
     header: batchTableHeaderObject,

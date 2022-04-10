@@ -651,6 +651,11 @@
     "@types/keygrip" "*"
     "@types/node" "*"
 
+"@types/draco3d@^1.4.1":
+  "integrity" "sha512-gXeVdWXN9zlx+nlaNEsFcxQSZxI574h3iwjsram2I/l/gpFYBe1KwXUR3xnFglD3cQ26/aeGiNBtSd8Muer5xQ=="
+  "resolved" "https://registry.npmjs.org/@types/draco3d/-/draco3d-1.4.1.tgz"
+  "version" "1.4.1"
+
 "@types/express-serve-static-core@^4.17.18":
   "integrity" "sha512-m4JTwx5RUBNZvky/JJ8swEJPKFd8si08pPF2PfizYjGZOKr/svUWPcoUmLow6MmPzhasphB7gSTINY67xn3JNA=="
   "resolved" "https://registry.npmjs.org/@types/express-serve-static-core/-/express-serve-static-core-4.17.18.tgz"
