@@ -83,7 +83,7 @@ function getOutputDimension(dimension: Dimension): Dimension {
 
   // If the value is scaled, or if it has size 8, then we always use a float.
   // The 64-bit integral types are not allowed.
-  if (scale !== 1 || size === 8) return { name, type: 'float', size: 4 }
+  if (scale !== 1 || (size === 8 && type !== 'float')) return { name, type: 'float', size: 4 }
   return { name, type, size }
 }
 
