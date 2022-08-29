@@ -2,8 +2,9 @@ import { basename, dirname, join } from 'protopath'
 
 import { Bounds, DataType, Ept, Hierarchy, Key, Srs } from 'ept'
 import { EptToolsError } from 'types'
-import { JsonSchema, Reproject, getBinary, getJson } from 'utils'
+import { getJson, JsonSchema, Reproject } from 'utils'
 
+import { buildMultiView } from 'ept/multiview'
 import { Cache } from './cache'
 import { Pnts } from './pnts'
 import { Tileset } from './tileset'
@@ -61,11 +62,11 @@ export async function translate({ filename, cache, options = {} }: Translate) {
   // into 3D Tiles "pnts" format.
   const key = Key.parse(root)
   const bufferExtension = DataType.extension(dataType)
-  const buffer = await getBinary(
-    join(eptdir, 'ept-data', `${root}.${bufferExtension}`)
-  )
-
-  const view = await DataType.view(dataType, buffer, schema)
+  const view = await buildMultiView(
+    join(eptdir, 'ept-data', `${root}.${bufferExtension}`),
+    ept,
+    options.replace || false
+  );
   const tileBounds = Bounds.stepTo(bounds, key)
   const toEcef = Reproject.create(codeString, 'EPSG:4978')
   return Pnts.translate({ view, tileBounds, toEcef, options })

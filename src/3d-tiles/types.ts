@@ -9,6 +9,7 @@ export type Options = {
   dimensions: string[]
   addons: Addons
   truncate: boolean
+  replace: boolean
 }
 
 export type Params = {

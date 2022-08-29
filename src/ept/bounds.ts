@@ -28,6 +28,7 @@ export const Bounds = {
   stepTo,
   reproject,
   offsetHeight,
+  contains,
 }
 
 function min(b: Bounds): Point {
@@ -84,4 +85,8 @@ function reproject(bounds: Bounds, reproject: Reproject): Bounds {
 
 function offsetHeight(b: Bounds, zOffset: number): Bounds {
   return [b[0], b[1], b[2] + zOffset, b[3], b[4], b[5] + zOffset]
+}
+
+function contains(b: Bounds, point: number[]) {
+  return point[0] >= b[0] && point[0] <= b[3] && point[1] >= b[1] && point[1] <= b[4] && point[2] >= b[2] && point[2] <= b[5]
 }

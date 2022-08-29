@@ -24,5 +24,11 @@ export const Key = {
     y * 2 + b,
     z * 2 + c,
   ],
+  parent: ([d, x, y, z]:  Key): Key => [
+    d - 1,
+    Math.floor(x / 2),
+    Math.floor(y / 2),
+    Math.floor(z / 2),
+  ],
   depth: (k: Key) => k[0],
 }
