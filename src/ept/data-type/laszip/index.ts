@@ -1,6 +1,6 @@
 import Module from 'lib/laz-perf'
 
-import { Schema } from 'ept'
+import { Schema } from '../../schema'
 
 import { View } from '../../view'
 
