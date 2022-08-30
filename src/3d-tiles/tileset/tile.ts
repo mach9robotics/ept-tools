@@ -21,6 +21,7 @@ export declare namespace Tile {
     hierarchy: Hierarchy
     key: Key
     geometricError: number
+    refine: 'ADD' | 'REPLACE'
   }
   export type Content = { uri: string }
 }
@@ -41,31 +42,40 @@ function translate({
   hierarchy,
   key,
   geometricError,
+  refine,
 }: Tile.TranslateOptions): Tile {
   const reproject = Reproject.create(code, 'EPSG:4326')
   const region = BoundingVolume.Region.fromWgs84(
     Bounds.reproject(bounds, reproject)
   )
 
-  const children = steps.reduce<Tile[]>((children, step) => {
-    const nextKey = Key.step(key, step)
-    const points = hierarchy[Key.stringify(nextKey)]
-    if (!points) return children
-    const nextBounds = Bounds.step(bounds, step)
-
-    children.push(
-      translate({
-        code,
-        hierarchy,
-        bounds: nextBounds,
-        key: nextKey,
-        geometricError: geometricError / 2,
-      })
-    )
-    return children
-  }, [])
-
   const points = hierarchy[Key.stringify(key)]
+  let children: Tile[];
+  // Don't recurse into empty tiles
+  if (points) {
+    children = steps.reduce<Tile[]>((children, step) => {
+      const nextKey = Key.step(key, step)
+      const points = hierarchy[Key.stringify(nextKey)]
+      // If ADD refinement, don't even add empty tiles to the hierarchy
+      if (!points && refine === 'ADD') return children
+      const nextBounds = Bounds.step(bounds, step)
+  
+      children.push(
+        translate({
+          code,
+          hierarchy,
+          bounds: nextBounds,
+          key: nextKey,
+          geometricError: geometricError / 2,
+          refine,
+        })
+      )
+      return children
+    }, [])
+  } else {
+    children = []
+  }
+
   const extension = points === -1 ? 'json' : 'pnts'
 
   const tile: Tile = {
@@ -74,6 +84,6 @@ function translate({
     geometricError,
     children,
   }
-  if (Key.depth(key) === 0) tile.refine = 'ADD'
+  if (Key.depth(key) === 0) tile.refine = refine
   return tile
 }

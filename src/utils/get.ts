@@ -1,7 +1,25 @@
 import { Forager } from 'forager'
 
-export async function getBinary(path: string) {
-  return Forager.read(path)
+const binaries: {
+  [key: string]: {
+    path: string,
+    data: Buffer,
+  }
+} = {}
+
+export async function getBinary(path: string, optionalCacheKey?: string) {
+  if (optionalCacheKey) {
+    const cached = binaries[optionalCacheKey]
+    if (cached && cached.path === path) {
+      return cached.data
+    } else {
+      const data = await Forager.read(path)
+      binaries[optionalCacheKey] = { path, data }
+      return data
+    }
+  } else {
+    return Forager.read(path)
+  }
 }
 
 export async function getJson(path: string): Promise<unknown> {

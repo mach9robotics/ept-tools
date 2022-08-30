@@ -1,10 +1,11 @@
+import Router from '@koa/router'
 import Koa from 'koa'
 import logger from 'koa-logger'
-import Router from '@koa/router'
 import { join, normalize } from 'protopath'
 
-import { Cache, translate } from '3d-tiles'
 import { HttpError } from 'types'
+import { Cache } from '../cache'
+import { translate } from '../translate'
 
 import { Cors } from './cors'
 import { Httpx } from './httpx'
