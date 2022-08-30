@@ -30,7 +30,7 @@ function translate({
   key,
   ept,
   hierarchy,
-  options: { zOffset = 0, dimensions = [], truncate = false } = {},
+  options: { zOffset = 0, dimensions = [], truncate = false, replace = false } = {},
 }: Tileset.Create): Tileset {
   const rootGeometricError =
     Bounds.width(ept.bounds) / Constants.geometricErrorDivisor
@@ -42,7 +42,7 @@ function translate({
 
   // See "Tileset Properties" in section 2 of
   // https://github.com/CesiumGS/3d-tiles/blob/master/3d-tiles-overview.pdf.
-  const root = Tile.translate({ bounds, code, hierarchy, key, geometricError })
+  const root = Tile.translate({ bounds, code, hierarchy, key, geometricError, refine: replace ? 'REPLACE' : 'ADD' })
 
   dimensions = dimensions.filter((name) => {
     if (Schema.has(ept.schema, name)) return true

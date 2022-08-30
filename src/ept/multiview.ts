@@ -24,6 +24,10 @@ export class MultiView implements View.Readable {
   // Return (index of view, index in view) for all in-bound points.  
   // The nth point in this view is accessible via views[inBounds[n][0]].getter('Field')(inBounds[n][1])
   inBounds: [number, number][] = []
+  // If all parent views are empty, we still need to return a single point for Cesium.  empty is true
+  // if so, in which case also length === 1.
+  empty: boolean = false
+  
   constructor(views: View.Readable[], bounds: Bounds, schema: Schema) {
     this.schema = schema
 
@@ -40,17 +44,22 @@ export class MultiView implements View.Readable {
         const z = view.getter('Z')(pointIdx)
         if (Bounds.contains(bounds, [x, y, z])) {
           this.inBounds.push([viewIdx, pointIdx])
-        } else {
-          if (viewIdx === 0) {
-            throw new Error(`Point ${pointIdx} is out of bounds: ${[x, y, z]}, bounds are: ${bounds}`)
-          }
         }
       }
     }
     this.length = this.inBounds.length
+    if (this.length === 0) {
+      // Cesium behaves badly with empty tiles, so we just return a single point.
+      this.empty = true
+      this.length = 1
+    }
   }
 
   getter = (name: string): (index: number) => number => {
+    if (this.empty) {
+      return (_: number) => 0
+    }
+
     return (i: number) => {
       const [viewIdx, pointIdx] = this.inBounds[i]
       return this.views[viewIdx].getter(name)(pointIdx)
@@ -82,7 +91,7 @@ export async function buildMultiView(rootFilename: string, ept: {
   const viewsOrNull: (View.Readable | null)[] = await Promise.all(keys.map(async (key) => {
     const filename = `${dirName}/${Key.stringify(key)}.${extension}`;
     try {
-      const buffer = await getBinary(filename)
+      const buffer = await getBinary(filename, key[0].toString())
       const view = await DataType.view(ept.dataType, buffer, ept.schema)
       return view
     }
@@ -92,6 +101,7 @@ export async function buildMultiView(rootFilename: string, ept: {
   }));
 
   const views = viewsOrNull.filter(view => view !== null) as View.Readable[]
+  const multiview = new MultiView(views, Bounds.stepTo(ept.bounds, rootKey), ept.schema)
 
-  return new MultiView(views, Bounds.stepTo(ept.bounds, rootKey), ept.schema)
+  return multiview
 }

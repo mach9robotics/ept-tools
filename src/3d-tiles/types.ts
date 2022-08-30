@@ -10,6 +10,7 @@ export type Options = {
   addons: Addons
   truncate: boolean
   replace: boolean
+  verbose: boolean
 }
 
 export type Params = {

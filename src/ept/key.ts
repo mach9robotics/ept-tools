@@ -1,4 +1,4 @@
-import { Step } from './step'
+import { Step, STEPS } from './step'
 
 export type Key = [number, number, number, number] // D-X-Y-Z.
 
@@ -24,11 +24,12 @@ export const Key = {
     y * 2 + b,
     z * 2 + c,
   ],
-  parent: ([d, x, y, z]:  Key): Key => [
+  parent: ([d, x, y, z]: Key): Key => [
     d - 1,
     Math.floor(x / 2),
     Math.floor(y / 2),
     Math.floor(z / 2),
   ],
+  children: (k: Key): Key[] => STEPS.map((step) => Key.step(k, step)),
   depth: (k: Key) => k[0],
 }
