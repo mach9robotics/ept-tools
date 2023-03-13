@@ -1,6 +1,6 @@
 import { BoundingVolume } from '3d-tiles/bounding-volume'
-import { Bounds, Hierarchy, Key, Step } from 'ept'
-import { Reproject } from 'utils'
+import { Hierarchy, Key, Step } from 'ept'
+import { CartesianBounds } from 'ept/cartesianBounds'
 
 
 const steps: Step[] = [
@@ -16,7 +16,7 @@ const steps: Step[] = [
 
 export declare namespace Tile {
   export type TranslateOptions = {
-    bounds: Bounds
+    bounds: CartesianBounds,
     code: string
     hierarchy: Hierarchy
     key: Key
@@ -44,10 +44,7 @@ function translate({
   geometricError,
   refine,
 }: Tile.TranslateOptions): Tile {
-  const reproject = Reproject.create(code, 'EPSG:4326')
-  const region = BoundingVolume.Region.fromWgs84(
-    Bounds.reproject(bounds, reproject)
-  )
+  const box = BoundingVolume.Box.create(bounds.center, [bounds.length[0], 0, 0], [0, bounds.length[1], 0], [0, 0, bounds.length[2]])
 
   const points = hierarchy[Key.stringify(key)]
   let children: Tile[];
@@ -58,7 +55,7 @@ function translate({
       const points = hierarchy[Key.stringify(nextKey)]
       // If ADD refinement, don't even add empty tiles to the hierarchy
       if (!points && refine === 'ADD') return children
-      const nextBounds = Bounds.step(bounds, step)
+      const nextBounds = CartesianBounds.step(bounds, step)
   
       children.push(
         translate({
@@ -80,7 +77,7 @@ function translate({
 
   const tile: Tile = {
     content: { uri: `${Key.stringify(key)}.${extension}` },
-    boundingVolume: { region },
+    boundingVolume: { box },
     geometricError,
     children,
   }

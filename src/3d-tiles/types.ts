@@ -1,5 +1,5 @@
-import { Bounds, View } from 'ept'
-import { Reproject } from 'utils'
+import { View } from 'ept'
+import { CartesianBounds } from 'ept/cartesianBounds'
 
 export type Addon = [string, string]
 export type Addons = Addon[]
@@ -15,7 +15,6 @@ export type Options = {
 
 export type Params = {
   view: View.Readable
-  tileBounds: Bounds
-  toEcef: Reproject
+  tileBounds: CartesianBounds
   options: Partial<Options>
 }

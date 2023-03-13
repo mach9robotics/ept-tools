@@ -1,4 +1,5 @@
 import { Bounds, Ept, Hierarchy, Key, Schema, Srs } from 'ept'
+import { CartesianBounds } from 'ept/cartesianBounds'
 import { EptToolsError } from 'types'
 import { Options } from '../types'
 import * as Constants from './constants'
@@ -36,7 +37,8 @@ function translate({
     Bounds.width(ept.bounds) / Constants.geometricErrorDivisor
   const geometricError = rootGeometricError / Math.pow(2, Key.depth(key))
 
-  const bounds = Bounds.stepTo(Bounds.offsetHeight(ept.bounds, zOffset), key)
+  const bounds = CartesianBounds.stepTo(CartesianBounds.offsetHeight(CartesianBounds.fromBounds(ept.bounds), zOffset), key)
+  // const bounds = Bounds.stepTo(Bounds.offsetHeight(ept.bounds, zOffset), key)
   const code = Srs.horizontalCodeString(ept.srs)
   if (!code) throw new EptToolsError('Cannot translate without an SRS code')
 
