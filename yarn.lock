@@ -3331,6 +3331,11 @@
     "type-is" "^1.6.16"
     "vary" "^1.1.2"
 
+"laz-perf@^0.0.5":
+  "integrity" "sha512-unnaoahcikJ+AwOm6BhN0JYi2vRhMF7fns28HIsgIw/o0Gwhaizqoc/+txA397/5oUHlljaCIrwSatzrEKlxJQ=="
+  "resolved" "https://registry.npmjs.org/laz-perf/-/laz-perf-0.0.5.tgz"
+  "version" "0.0.5"
+
 "leven@^3.1.0":
   "integrity" "sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A=="
   "resolved" "https://registry.npmjs.org/leven/-/leven-3.1.0.tgz"
@@ -4731,10 +4736,10 @@
   "resolved" "https://registry.npmjs.org/tsscmp/-/tsscmp-1.0.6.tgz"
   "version" "1.0.6"
 
-"ttypescript@^1.5.12":
-  "integrity" "sha512-1ojRyJvpnmgN9kIHmUnQPlEV1gq+VVsxVYjk/NfvMlHSmYxjK5hEvOOU2MQASrbekTUiUM7pR/nXeCc8bzvMOQ=="
-  "resolved" "https://registry.npmjs.org/ttypescript/-/ttypescript-1.5.12.tgz"
-  "version" "1.5.12"
+"ttypescript@^1.5.15":
+  "integrity" "sha512-48ykDNHzFnPMnv4hYX1P8Q84TvCZyL1QlFxeuxsuZ48X2+ameBgPenvmCkHJtoOSxpoWTWi8NcgNrRnVDOmfSg=="
+  "resolved" "https://registry.npmjs.org/ttypescript/-/ttypescript-1.5.15.tgz"
+  "version" "1.5.15"
   dependencies:
     "resolve" ">=1.9.0"
 

@@ -24,6 +24,7 @@
     "fs-extra": "^9.1.0",
     "koa": "^2.13.1",
     "koa-logger": "^3.2.1",
+    "laz-perf": "^0.0.5",
     "log-symbols": "^4.0.0",
     "node-fetch": "^2.6.1",
     "protopath": "^0.0.0",
