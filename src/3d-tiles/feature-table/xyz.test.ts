@@ -1,6 +1,5 @@
 import { Bounds, DataType, Schema } from 'ept'
 import { Ellipsoid, Pnts } from 'test'
-import { Point } from 'types'
 import { Reproject, Scale } from 'utils'
 
 import { Xyz } from './xyz'
@@ -38,7 +37,7 @@ test('create', async () => {
   const ecefMid = Bounds.mid(ecefBounds)
   const xyz = Xyz.create({
     view,
-    tileBounds,
+    tileBounds: tileBounds as any,
     toEcef,
     options: Pnts.defaultOptions,
   })
@@ -80,6 +79,7 @@ test('z offset', async () => {
 
   const xyz = Xyz.create({
     view,
+    //@ts-ignore
     tileBounds,
     toEcef,
     options: { zOffset },

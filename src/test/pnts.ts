@@ -4,4 +4,6 @@ export const defaultOptions: Options = {
   dimensions: [],
   addons: [],
   truncate: false,
+  replace: false,
+  verbose: false,
 }

@@ -1,9 +1,10 @@
 import { basename, dirname, join } from 'protopath'
 
-import { Bounds, DataType, Ept, Hierarchy, Key, Srs } from 'ept'
+import { DataType, Ept, Hierarchy, Key, Srs } from 'ept'
 import { EptToolsError } from 'types'
-import { getJson, JsonSchema, Reproject } from 'utils'
+import { getJson, JsonSchema } from 'utils'
 
+import { CartesianBounds } from 'ept/cartesianBounds'
 import { buildMultiView } from 'ept/multiview'
 import { Cache } from './cache'
 import { Pnts } from './pnts'
@@ -34,6 +35,7 @@ export async function translate({ filename, cache, options = {} }: Translate) {
     JsonSchema.validate<Ept>(Ept.schema, await getJson(eptfilename))[0]
 
   const { bounds, dataType, schema, srs } = ept
+  const cartesianBounds = CartesianBounds.fromBounds(bounds)
   const codeString = Srs.horizontalCodeString(srs)
   if (!codeString) {
     throw new EptToolsError('Cannot translate to 3D Tiles without an SRS code')
@@ -67,7 +69,6 @@ export async function translate({ filename, cache, options = {} }: Translate) {
     ept,
     options.replace || false
   );
-  const tileBounds = Bounds.stepTo(bounds, key)
-  const toEcef = Reproject.create(codeString, 'EPSG:4978')
-  return Pnts.translate({ view, tileBounds, toEcef, options })
+  const tileBounds = CartesianBounds.stepTo(cartesianBounds, key)
+  return Pnts.translate({ view, tileBounds, options })
 }

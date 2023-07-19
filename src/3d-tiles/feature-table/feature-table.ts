@@ -1,6 +1,7 @@
 import { Params } from '3d-tiles/types'
 import { padEnd, sumLengths } from '3d-tiles/utils'
-import { Bounds, Schema } from 'ept'
+import { Schema } from 'ept'
+import { CartesianBounds } from 'ept/cartesianBounds'
 
 import { Header } from './header'
 import { Rgb } from './rgb'
@@ -15,18 +16,15 @@ export declare namespace FeatureTable {
 export type FeatureTable = { header: Header; binary: Buffer }
 export const FeatureTable = { create }
 
-function create({ view, tileBounds, toEcef, options }: Params): FeatureTable {
-  const bounds = Bounds.reproject(
-    Bounds.offsetHeight(tileBounds, options.zOffset || 0),
-    toEcef
-  )
+function create({ view, tileBounds, options }: Params): FeatureTable {
+  const bounds = CartesianBounds.offsetHeight(tileBounds, options.zOffset || 0);
   const header: Header = {
     POINTS_LENGTH: view.length,
-    RTC_CENTER: Bounds.mid(bounds),
+    RTC_CENTER: CartesianBounds.mid(bounds),
     POSITION: { byteOffset: 0 },
   }
 
-  const buffers = [Xyz.create({ view, tileBounds, toEcef, options })]
+  const buffers = [Xyz.create({ view, tileBounds, options })]
 
   const has = (name: string) => Schema.has(view.schema, name)
 
