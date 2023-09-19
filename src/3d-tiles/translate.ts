@@ -2,7 +2,7 @@ import { basename, dirname, join } from 'protopath'
 
 import { DataType, Ept, Hierarchy, Key, Srs } from 'ept'
 import { EptToolsError } from 'types'
-import { getJson, JsonSchema } from 'utils'
+import { JsonSchema, getJson } from 'utils'
 
 import { CartesianBounds } from 'ept/cartesianBounds'
 import { buildMultiView } from 'ept/multiview'

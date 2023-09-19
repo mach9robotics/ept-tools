@@ -82,5 +82,6 @@ function translate({
     children,
   }
   if (Key.depth(key) === 0) tile.refine = refine
+  if (extension === 'json') delete tile.children
   return tile
 }
